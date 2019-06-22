@@ -1,5 +1,5 @@
 from django.db import models
-from django.db import AbstractUser
+from django.contrib.auth.models import AbstractUser
 from django.utils.html import escape, mark_safe
 
 class User(AbstractUser):
@@ -58,11 +58,11 @@ class Student(models.Model):
 
 class TakenExam(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='taken_exams')
-    quiz = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name='taken_exams')
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name='taken_exams')
     score = models.FloatField()
     date = models.DateTimeField(auto_now_add=True)
 
 
 class StudentAnswer(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='quiz_answers')
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='exam_answers')
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE, related_name='+')
