@@ -20,7 +20,7 @@ def home(request):
             #return redirect('teachers:quiz_change_list')
         #else:
             #return redirect('students:quiz_list')
-    return render(request, 'classroom/home.html')
+    return render(request, 'exam/home.html')
 
 class StudentSignUpView(CreateView):
     model = User

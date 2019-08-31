@@ -1,0 +1,18 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title>OnlineAssessment</title>
+	</head>
+	<body>
+			<h1>OnlineAssessment</h1>
+			<p>OnlineAssessment is a website that provides an easy way to create and maintian quizes.</p>
+			<h1>Let's get you started</h1>
+			<p class="lead">
+    			If you already have an account, go ahead and <a href="{% url 'login' %}">log in</a>. If you are new user, get started
+    			by creating a <a href="{% url 'student_signup' %}">student account</a> or a <a href="{% url 'teacher_signup' %}">teacher account</a>.
+  			</p>
+
+	</body>
+</html>
