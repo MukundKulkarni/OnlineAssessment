@@ -1,12 +1,13 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth import login
+from django.db.models import Count
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.views.generic import TemplateView, CreateView, UpdateView
+from django.views.generic import TemplateView, CreateView, UpdateView, ListView
 from django.urls import reverse_lazy
 
 
-from .models import User, Student
+from .models import User, Student, Exam
 from .forms import StudentSignUpForm, StudentInterestsForm, TeacherSignUpForm
 from .decorators import student_required, teacher_required
 
@@ -50,6 +51,23 @@ class StudentInterestsView(UpdateView):
     def form_valid(self, form):
         messages.success(self.request, 'Interests updated with success!')
         return super().form_valid(form)
+
+@method_decorator([login_required, student_required], name='dispatch')
+class QuizListView(ListView):
+    model = Exam
+    ordering = ('name', )
+    context_object_name = 'exams'
+    template_name = 'exam/students/quiz_list.html'
+
+    def get_queryset(self):
+        student = self.request.user.student
+        student_interests = student.interests.values_list('pk', flat=True)
+        taken_exams = student.exams.values_list('pk', flat=True)
+        queryset = Exam.objects.filter(subject__in=student_interests) \
+            .exclude(pk__in=taken_exams) \
+            .annotate(questions_count=Count('questions')) \
+            .filter(questions_count__gt=0)
+        return queryset
 
 class TeacherSignUpView(CreateView):
     model = User

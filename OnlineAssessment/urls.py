@@ -19,7 +19,7 @@ from exam import views
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    #path('admin/', admin.site.urls),
     path('', include('exam.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/signup/', views.SignUpView.as_view(), name='signup'),

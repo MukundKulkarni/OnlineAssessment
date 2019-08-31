@@ -121,6 +121,14 @@ USE_TZ = True
 
 AUTH_USER_MODEL = 'exam.User'
 
+LOGIN_URL = 'login'
+
+LOGOUT_URL = 'logout'
+
+LOGIN_REDIRECT_URL = '/students'
+
+LOGOUT_REDIRECT_URL = 'home'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
